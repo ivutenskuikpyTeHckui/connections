@@ -24,10 +24,15 @@ class User(Base):
     user_info: Mapped[str] = mapped_column(nullable=True)
     id_parent: Mapped[int] = mapped_column(nullable=True)
     telegram_id: Mapped[int] = mapped_column(nullable=False)
-    registered_at: Mapped[datetime] = mapped_column(server_default=text("TIMEZONE('utc', now())"))
+    
+class Auth_user(Base):
+    __tablename__ = "auth_user"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(nullable=False)
+    phone_number: Mapped[str] = mapped_column(nullable=False)
+    user_info: Mapped[str] = mapped_column(nullable=False)
     hashed_password: Mapped[str] = mapped_column(String(length=1024), nullable=True)
     is_active: Mapped[bool] = mapped_column( default=True, nullable=False)
     is_superuser: Mapped[bool] = mapped_column(default=False, nullable=False)
     is_verified: Mapped[bool] = mapped_column(default=False, nullable=False)
-    
-
