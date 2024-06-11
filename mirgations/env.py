@@ -10,7 +10,7 @@ from src.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
 
 from src.database import Base
 
-from src.auth.models import User, Auth_user
+from src.auth.models import User, App_User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

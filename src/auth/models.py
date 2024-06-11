@@ -9,7 +9,7 @@ from src.database import Base
 # if TYPE_CHECKING:
 
 
-class User(Base):
+class App_User(Base):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -25,14 +25,15 @@ class User(Base):
     id_parent: Mapped[int] = mapped_column(nullable=True)
     telegram_id: Mapped[int] = mapped_column(nullable=False)
     
-class Auth_user(Base):
+class User(Base):
     __tablename__ = "auth_user"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(nullable=False)
+    email: Mapped[str] = mapped_column(nullable=False)
     phone_number: Mapped[str] = mapped_column(nullable=False)
     user_info: Mapped[str] = mapped_column(nullable=False)
-    hashed_password: Mapped[str] = mapped_column(String(length=1024), nullable=True)
+    hashed_password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column( default=True, nullable=False)
     is_superuser: Mapped[bool] = mapped_column(default=False, nullable=False)
     is_verified: Mapped[bool] = mapped_column(default=False, nullable=False)
