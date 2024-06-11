@@ -49,6 +49,17 @@ class UserRepository:
             user = await session.scalar(query)
 
             return user
+        
+    @staticmethod
+    async def get_user_by_parent_id(parent_id:int) -> list[User]:
+        async with async_session_maker() as session:
+            query = (
+                select(App_User).filter(App_User.id_parent == parent_id)
+            )
+
+            user = await session.scalars(query)
+
+            return list(user)
             
     @staticmethod
     async def get_all_auth_users() -> list[User]:

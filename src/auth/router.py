@@ -31,6 +31,11 @@ async def get_user(user_id:int):
     user = await UserRepository.get_user(user_id)
     return user
     
+@router.get("/get_user_by_parent_id")
+async def get_user_by_parent_id(parent_id:int):
+    user = await UserRepository.get_user_by_parent_id(parent_id)
+    return user
+
 # Авторизованные пользователи ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 @router.get("/get_all_auth_users")
