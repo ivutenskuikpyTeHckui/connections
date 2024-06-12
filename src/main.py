@@ -10,11 +10,11 @@ from src.auth.base_config import auth_backend
 from src.auth.manager import get_user_manager
 from src.auth.schames import UserCreate, UserRead
 
+from src.category.router import router as router_category
 
 
-app = FastAPI(
-    
-)
+
+app = FastAPI()
 
 fastapi_users = FastAPIUsers[User, int](
     get_user_manager,
@@ -34,3 +34,4 @@ app.include_router(
 )
 
 app.include_router(router_auth)
+app.include_router(router_category)
