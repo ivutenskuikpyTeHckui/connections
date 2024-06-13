@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Query
 
 from src.category.crud import CategoryRepository
 from src.category.schemas import (
@@ -23,9 +23,14 @@ async def add_category(category:Annotated[Create_category_model, Body()]):
     return category
 
 @router.get("/get_categories")
-async def get_categries():
+async def get_categories():
     categories = await CategoryRepository.get_categories()
     return categories
+
+@router.get("/get_category")
+async def get_category(category_id:Annotated[int, Query()]):
+    category = await CategoryRepository.get_category(category_id)
+    return category
 
 @router.patch("/edit_category")
 async def edit_category(

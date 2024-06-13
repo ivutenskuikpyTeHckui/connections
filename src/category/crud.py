@@ -32,9 +32,23 @@ class CategoryRepository:
            )
 
            categories = await session.scalars(query)
+           await session.commit()
 
            return list(categories)
     
+    @staticmethod
+    async def get_category(category_id:int) -> Category:
+        async with async_session_maker() as session:
+            query = (
+                select(Category).
+                filter(Category.id == category_id)
+            )
+
+            category = await session.scalar(query)
+            await session.commit()
+
+            return category
+
     @staticmethod
     async def edit_category(
         updated_category:Update_categoty__model,
