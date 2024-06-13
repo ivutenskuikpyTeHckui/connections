@@ -6,7 +6,10 @@ from src.category.models import Category, Subcategory
 
 from src.database import async_session_maker
 
-from src.category.schemas import Create_category_model
+from src.category.schemas import (
+    Create_category_model,
+    Update_categoty__model
+)
 
 
 class CategoryRepository:
@@ -31,3 +34,33 @@ class CategoryRepository:
            categories = await session.scalars(query)
 
            return list(categories)
+    
+    @staticmethod
+    async def edit_category(
+        updated_category:Update_categoty__model,
+        category_id:int,
+    )-> Category:
+        async with async_session_maker() as session:
+            stmt = (
+                update(Category).
+                filter(Category.id == category_id).
+                values(**updated_category.model_dump(exclude_none=True))
+            ).returning(Category)
+
+            category = await session.scalar(stmt)
+            await session.commit()
+            
+            return category
+        
+    @staticmethod
+    async def delete_category(category_id:int):
+        async with async_session_maker() as session:
+            stmt = (
+                delete(Category).
+                filter(Category.id == category_id)
+            )
+
+            await session.execute(stmt)
+            await session.commit()
+
+            return {"status": "success"}
