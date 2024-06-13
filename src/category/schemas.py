@@ -3,10 +3,22 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class Create_category_model(BaseModel):
+# Категории
+
+class CreateCategoryModel(BaseModel):
     title: str
 
 
-class Update_categoty__model(BaseModel):
+class UpdateCategoryModel(BaseModel):
     title: Optional[str] = None
 
+
+# Подкатегории
+
+class CreateSubcategoryModel(BaseModel):
+    title:str 
+    category_id:int
+
+class UpdateSubcategoryModel(BaseModel):
+    title: Optional[str] = None
+    category_id: Optional[int] = None

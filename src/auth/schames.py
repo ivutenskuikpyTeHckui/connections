@@ -18,7 +18,7 @@ class CreateUser(BaseModel):
     telegram_id: int    
 
 
-# Авторизованные пользователи ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+# Авторизованные пользователи 
 
 
 class UserRead(schemas.BaseUser[int]):

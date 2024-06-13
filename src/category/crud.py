@@ -1,20 +1,21 @@
 from sqlalchemy import select, delete, update
 from sqlalchemy.orm import selectinload, joinedload
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.category.models import Category, Subcategory
 
 from src.database import async_session_maker
 
 from src.category.schemas import (
-    Create_category_model,
-    Update_categoty__model
+    CreateCategoryModel,
+    UpdateCategoryModel, 
+    CreateSubcategoryModel,
+    UpdateSubcategoryModel,
 )
 
 
 class CategoryRepository:
     @staticmethod
-    async def add_category(category:Create_category_model)->Category:
+    async def add_category(category:CreateCategoryModel)->Category:
         async with async_session_maker() as session:
             stmt = category.model_dump()
             new_category = Category(**stmt)
@@ -51,9 +52,9 @@ class CategoryRepository:
 
     @staticmethod
     async def edit_category(
-        updated_category:Update_categoty__model,
+        updated_category:UpdateCategoryModel,
         category_id:int,
-    )-> Category:
+    ) -> Category:
         async with async_session_maker() as session:
             stmt = (
                 update(Category).
@@ -72,6 +73,72 @@ class CategoryRepository:
             stmt = (
                 delete(Category).
                 filter(Category.id == category_id)
+            )
+
+            await session.execute(stmt)
+            await session.commit()
+
+            return {"status": "success"}
+        
+
+class SubcategoryRepository:
+    @staticmethod
+    async def add_subcategory(
+        subcategory:CreateSubcategoryModel,
+    ) -> Subcategory:
+        async with async_session_maker() as session:
+            stmt = subcategory.model_dump()
+            new_subcategory = Subcategory(**stmt)
+            session.add(new_subcategory)
+            await session.commit()
+
+            return new_subcategory
+    
+    @staticmethod
+    async def get_subcategories() -> list[Subcategory]:
+        async with async_session_maker() as session:
+            query = (
+                select(Subcategory)
+            )
+
+            subcategories = await session.scalars(query)
+            await session.commit()
+            return list(subcategories)
+        
+    @staticmethod
+    async def get_subcategory(subcategory_id:int) -> Subcategory:
+        async with async_session_maker() as session:
+            query = (
+                select(Subcategory).
+                filter(Subcategory.id == subcategory_id)
+            )
+
+            subcategory = await session.scalar(query)
+            await session.commit()
+            return subcategory
+        
+    @staticmethod
+    async def edit_subcategory(
+        updated_subcategory: UpdateSubcategoryModel,
+        subcategory_id: int,
+    ):
+        async with async_session_maker() as session:
+            stmt = (
+                update(Subcategory).
+                filter(Subcategory.id == subcategory_id).
+                values(**updated_subcategory.model_dump(exclude_none=True))
+            ).returning(Subcategory)
+
+            subcategory = await session.scalar(stmt)
+            await session.commit()
+            return subcategory
+        
+    @staticmethod
+    async def delete_subcategory(subcategory_id:int):
+        async with async_session_maker() as session:
+            stmt = (
+                delete(Subcategory).
+                filter(Subcategory.id == subcategory_id)
             )
 
             await session.execute(stmt)
