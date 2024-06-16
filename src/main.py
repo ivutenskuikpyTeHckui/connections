@@ -12,6 +12,8 @@ from src.auth.schames import UserCreate, UserRead
 
 from src.category.router import router as router_category
 
+from src.bot.router import router as router_bot
+
 
 
 app = FastAPI()
@@ -35,3 +37,4 @@ app.include_router(
 
 app.include_router(router_auth)
 app.include_router(router_category)
+app.include_router(router_bot)
