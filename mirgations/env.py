@@ -12,6 +12,7 @@ from src.database import Base
 
 from src.auth.models import User, App_User
 from src.category.models import Category, Subcategory
+from src.bot.models import User_bot
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
