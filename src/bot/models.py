@@ -12,3 +12,14 @@ class User_bot(Base):
     friend_code: Mapped[int] = mapped_column(nullable=True)
     username: Mapped[str] = mapped_column(nullable=True)
     first_name: Mapped[str] = mapped_column(nullable=True)
+
+
+class Connect(Base):
+    __tablename__ = "connect"
+
+    id:Mapped[int] = mapped_column(primary_key=True)
+    name:Mapped[str] = mapped_column(nullable=True)
+    profession:Mapped[str] = mapped_column(nullable=True)
+    city:Mapped[str] = mapped_column(nullable=True)
+    info:Mapped[str] = mapped_column(nullable=True)
+    master_id:Mapped[int] = mapped_column(nullable=True)
