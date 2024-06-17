@@ -36,3 +36,12 @@ class UserBotRepository:
 
             return user
 
+    @staticmethod
+    async def add_user_bot(user_model:CreateUserBot)->User_bot:
+        async with async_session_maker() as session:
+            stmt = user_model.model_dump()
+            new_user = User_bot(**stmt)
+            session.add(new_user)
+            await session.commit()
+
+            return new_user

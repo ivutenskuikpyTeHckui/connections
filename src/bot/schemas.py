@@ -17,3 +17,5 @@ class UpdateUserBot(BaseModel):
     friend_code:Optional[int] = None
     username:Optional[str] = None
     first_name:Optional[str] = None
+
+
